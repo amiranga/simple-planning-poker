@@ -15,3 +15,10 @@
   box-shadow: 0px 0px 0px 7px rgb(0, 76, 121) inset;
   cursor: pointer;
 }
+
+.poker-card.selected {
+  background-color: rgb(0, 76, 121);
+  box-shadow: 0px 0px 0px 7px rgb(0, 76, 121) inset;
+  color: #f3f3f3;
+  cursor: pointer;
+}

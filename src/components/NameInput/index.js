@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
+
 import { createSession } from '../../store/actions';
 
 class NameInput extends Component {
@@ -21,14 +24,23 @@ class NameInput extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>Please Enter User Name</div>
-        <input
-          type="text"
-          onChange={this.handleChange}
-        />
-        <input type="submit" value="Submit" />
-      </form>
+      <Modal show={true} size="md" centered>
+        <Modal.Header>
+          <Modal.Title>Please Enter Your Name</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group as={Row} controlId="formHorizontalName">
+              <Col sm={8}>
+                <Form.Control type="text" placeholder="Name" onChange={this.handleChange} />
+              </Col>
+              <Col sm={4}>
+                <Button onClick={this.handleSubmit}>Save</Button>
+              </Col>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+      </Modal>
     )
   }
 }

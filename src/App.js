@@ -7,6 +7,8 @@ import CardDeck from './components/CardDeck';
 import UserList from './components/UserList';
 import NameInput from './components/NameInput';
 
+import NewRoom from './components/NewRoom';
+
 class App extends Component {
   constructor(props) {
     super(props);
