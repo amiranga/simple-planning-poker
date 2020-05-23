@@ -23,7 +23,7 @@ class App extends Component {
       <div>
         {this.props.isLoggedIn ?
           <div>
-            <CardDeck cardNumbers={[1, 2, 3, 4, 5]} />
+            <CardDeck gameFormat='scrum' />
             <UserList />
           </div>
           : <NameInput />}

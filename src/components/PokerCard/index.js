@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import './styles.css';
+
+import { addVote, removeVote } from '../../store/actions';
 
 
 class PokerCard extends React.Component {
@@ -7,15 +11,20 @@ class PokerCard extends React.Component {
   constructor(props) {
     super(props);
     this.toggleSelect = this.toggleSelect.bind(this);
-    this.state = { selected: false };
   }
 
   toggleSelect() {
-    this.setState({ selected: !this.state.selected });
+    const isSelected = !this.props.selected;
+
+    if (isSelected) {
+      this.props.addVote(this.props.number)
+    } else {
+      this.props.removeVote();
+    }
   }
 
   render() {
-    const cn = 'poker-card' + (this.state.selected ? ' selected' : '');
+    const cn = 'poker-card' + (this.props.selected ? ' selected' : '');
     return <div
       className={cn}
       onClick={this.toggleSelect}
@@ -23,4 +32,14 @@ class PokerCard extends React.Component {
   }
 }
 
-export default PokerCard;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addVote: (val) => {
+      dispatch(addVote(val))
+    },
+    removeVote: () => {
+      dispatch(removeVote())
+    }
+  }
+}
+export default connect(null, mapDispatchToProps)(PokerCard);

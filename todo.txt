@@ -5,8 +5,9 @@ Handle voting
   user list update
 
 Create start game dialog
-  UI - name, cardSet
-  generate game ID, change url
+  UI - name, cardSet                        ------------------Done
+  generate game ID
+  change url                        ------------------Done
   update DB
 
 Admin UI

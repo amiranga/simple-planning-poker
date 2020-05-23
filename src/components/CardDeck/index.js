@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import PokerCard from '../PokerCard';
+import { GAME_FORMATS } from '../../constants';
 
 class CardDeck extends Component {
   constructor(props) {
@@ -8,12 +11,24 @@ class CardDeck extends Component {
   }
 
   render() {
+    const deck = GAME_FORMATS[this.props.gameFormat].cards;
     return (
       <div>
-        {this.props.cardNumbers.map(i => <PokerCard number={i} />)}
+        {deck.map(i =>
+          <PokerCard
+            number={i}
+            selected={this.props.vote == i}
+          />
+        )}
       </div>
     );
   }
 }
 
-export default CardDeck;
+const mapStateToProps = (state) => {
+  return {
+    vote: state.vote
+  }
+}
+
+export default connect(mapStateToProps)(CardDeck)
