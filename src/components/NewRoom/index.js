@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { withRouter } from 'react-router-dom';
+
 import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
 
 import { GAME_FORMATS } from '../../constants';
@@ -13,8 +15,9 @@ export class NewRoom extends Component {
     this.state = {}
   }
 
-  startGame() {
-
+  startGame(e) {
+    e.preventDefault();
+    this.props.history.push('/room');
   }
 
 
@@ -85,4 +88,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewRoom)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewRoom))
