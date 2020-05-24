@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import User from '../User'
 
 import { getUsers } from '../../services/database-service';
+import { Container } from 'react-bootstrap';
 
 class UserList extends Component {
 
@@ -22,9 +23,9 @@ class UserList extends Component {
 
   render() {
     return (
-      <div>
+      <Container class="user-holder">
         {this.state.users.map(usr => <User name={usr.fullname} />)}
-      </div>
+      </Container>
     );
   }
 }
