@@ -23,12 +23,22 @@ class PokerCard extends React.Component {
     }
   }
 
+  getLable(symbol) {
+    if (symbol == 'Coffee') {
+      return '\u2615';
+    } else if (symbol == '1/2') {
+      return '\u00BD';
+    } else {
+      return symbol;
+    }
+  }
+
   render() {
     const cn = 'poker-card' + (this.props.selected ? ' selected' : '');
     return <div
       className={cn}
       onClick={this.toggleSelect}
-    >{this.props.number}</div>
+    >{this.getLable(this.props.number)}</div>
   }
 }
 

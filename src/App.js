@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Container, Col, Row } from 'react-bootstrap';
+
 import { validateSession } from './store/actions';
 
 import CardDeck from './components/CardDeck';
@@ -22,10 +24,16 @@ class App extends Component {
     return (
       <div>
         {this.props.isLoggedIn ?
-          <div>
-            <CardDeck gameFormat='scrum' />
-            <UserList />
-          </div>
+          <Container>
+            <Row>
+              <Col sm={8}>
+                <CardDeck gameFormat='scrum' />
+              </Col>
+              <Col sm={4}>
+                <UserList />
+              </Col>
+            </Row>
+          </Container>
           : <NameInput />}
       </div>
     );
