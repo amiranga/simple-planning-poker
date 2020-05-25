@@ -37,11 +37,12 @@ export const createRoom = (roomName, gameFormat, adminUserId) => {
 }
 
 export const validateSession = () => {
-  const un = getuserNameFromCookie();
-  if (un) {
+  const user = getuserNameFromCookie();
+  if (user) {
     return {
       type: ACTION_TYPES.LOGGED_IN,
-      userName: un
+      userName: user.userName,
+      userId: user.userId
     }
   } else {
     return {
