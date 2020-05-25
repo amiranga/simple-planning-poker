@@ -2,22 +2,22 @@ import firebase from '../firebase';
 
 const USER_TABLE = 'users';
 
-export function saveUser(userName) {
+export function saveUser(user) {
   const db = firebase.firestore();
   db.settings({
     timestampsInSnapshots: true
   });
-  const userRef = db.collection(USER_TABLE).add({
-    fullname: userName,
-    timestamp: Date.now()
+  db.collection(USER_TABLE).add({
+    userId: user.userId,
+    userName: user.userName
   });
 }
 
 export function getUsers(cb) {
   var query = firebase.firestore()
     .collection(USER_TABLE)
-    .orderBy('timestamp', 'desc')
-    .limit(12);
+    .orderBy('userName', 'desc')
+    .limit(15);
 
   // Start listening to the query.
   query.onSnapshot(function (snapshot) {

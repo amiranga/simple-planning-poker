@@ -5,7 +5,7 @@ export function getuserNameFromCookie() {
   return cookies.get('spp_user');
 }
 
-export function updateCookie(userName) {
+export function updateCookie(user) {
   const cookies = new Cookies();
-  cookies.set('spp_user', userName, { path: '/' });
+  cookies.set('spp_user', JSON.stringify(user), { path: '/' });
 }

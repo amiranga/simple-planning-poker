@@ -1,6 +1,8 @@
 import * as ACTION_TYPES from './action-types';
 import { getuserNameFromCookie, updateCookie } from '../../services/cookie-service.js'
 import { saveUser } from '../../services/database-service';
+import { generateUserID } from '../../services/uid-service';
+import User from '../../dto/user';
 
 export const addVote = val => ({
   type: ACTION_TYPES.VOTE,
@@ -12,11 +14,14 @@ export const removeVote = () => ({
 })
 
 export const createSession = (userName) => {
-  updateCookie(userName);
-  saveUser(userName);
+  const userID = generateUserID();
+  const user = new User(userName, userID);
+  updateCookie(user);
+  saveUser(user);
   return {
     type: ACTION_TYPES.LOGGED_IN,
-    userName: userName
+    userName: userName,
+    userID: userID
   }
 }
 
