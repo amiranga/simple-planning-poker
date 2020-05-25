@@ -1,8 +1,9 @@
 import * as ACTION_TYPES from './action-types';
 import { getuserNameFromCookie, updateCookie } from '../../services/cookie-service.js'
-import { saveUser } from '../../services/database-service';
-import { generateUserID } from '../../services/uid-service';
+import { saveUser, saveRoom } from '../../services/database-service';
+import { generateUserId, generateRoomId } from '../../services/uid-service';
 import User from '../../dto/user';
+import Room from '../../dto/room';
 
 export const addVote = val => ({
   type: ACTION_TYPES.VOTE,
@@ -14,14 +15,24 @@ export const removeVote = () => ({
 })
 
 export const createSession = (userName) => {
-  const userID = generateUserID();
-  const user = new User(userName, userID);
+  const userId = generateUserId();
+  const user = new User(userName, userId);
   updateCookie(user);
   saveUser(user);
   return {
     type: ACTION_TYPES.LOGGED_IN,
     userName: userName,
-    userID: userID
+    userId: userId
+  }
+}
+
+export const createRoom = (roomName, gameFormat, adminUserId) => {
+  const roomId = generateRoomId();
+  const room = new Room(roomId, roomName, gameFormat, adminUserId);
+  saveRoom(room);
+  return {
+    type: ACTION_TYPES.ROOM_CREATED,
+    roomId: roomId
   }
 }
 

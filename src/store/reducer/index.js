@@ -22,6 +22,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userName: action.userName,
+        userId: action.userId,
         loggedIn: true
       }
     case ACTION_TYPES.LOGGED_OUT:
@@ -29,6 +30,13 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userName: null,
         loggedIn: false
+      }
+    case ACTION_TYPES.ROOM_CREATED:
+    console.log("ACTION_TYPES.ROOM_CREATED");
+
+      return {
+        ...state,
+        roomId: action.roomId
       }
     default:
       return state

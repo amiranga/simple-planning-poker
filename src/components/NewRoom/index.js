@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { withRouter } from 'react-router-dom';
-
 import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
 
 import { GAME_FORMATS } from '../../constants';
+import { createRoom } from '../../store/actions'
 
 export class NewRoom extends Component {
 
@@ -17,9 +15,15 @@ export class NewRoom extends Component {
 
   startGame(e) {
     e.preventDefault();
-    this.props.history.push('/room');
+    const roomName = e.target.elements['roomName'].value;
+    let gameFormat;
+    e.target.elements['gameFormat'].forEach(ele => {
+      if (ele.checked) {
+        gameFormat = ele.value;
+      }
+    })
+    this.props.createRoom(roomName, gameFormat, this.props.userId);
   }
-
 
   render() {
     return (
@@ -36,7 +40,7 @@ export class NewRoom extends Component {
                   Game Name
                 </Form.Label>
                 <Col sm={8}>
-                  <Form.Control type="text" placeholder="Name" />
+                  <Form.Control type="text" name="roomName" placeholder="Name" />
                 </Col>
               </Form.Group>
               <fieldset>
@@ -47,20 +51,24 @@ export class NewRoom extends Component {
                   <Col sm={8}>
                     <Form.Check
                       type="radio"
+                      defaultChecked
                       label={GAME_FORMATS.scrum.label}
                       name="gameFormat"
+                      value={GAME_FORMATS.scrum.id}
                       id={GAME_FORMATS.scrum.id}
                     />
                     <Form.Check
                       type="radio"
                       label={GAME_FORMATS.fibonacci.label}
                       name="gameFormat"
+                      value={GAME_FORMATS.fibonacci.id}
                       id={GAME_FORMATS.fibonacci.id}
                     />
                     <Form.Check
                       type="radio"
                       label={GAME_FORMATS.sequential.label}
                       name="gameFormat"
+                      value={GAME_FORMATS.fibonacci.id}
                       id={GAME_FORMATS.fibonacci.id}
                     />
                   </Col>
@@ -80,12 +88,18 @@ export class NewRoom extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userId: state.userId
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewRoom))
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    createRoom: (roomName, gameFormat, adminUserId) => {
+      dispatch(createRoom(roomName, gameFormat, adminUserId))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewRoom)
