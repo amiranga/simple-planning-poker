@@ -39,3 +39,16 @@ export function saveRoom(room) {
     adminUserId: room.adminUserId
   });
 }
+
+export function getRoom(roomId, cb) {
+  const db = firebase.firestore();
+  db.collection(ROOM_TABLE)
+    .where("roomId", "==", roomId)
+    .get()
+    .then(snap => {
+      snap.forEach(doc => {
+        console.log("geting data", doc.data());
+        cb(doc.data());
+      });
+    });
+}

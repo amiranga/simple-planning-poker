@@ -32,11 +32,14 @@ const rootReducer = (state = initialState, action) => {
         loggedIn: false
       }
     case ACTION_TYPES.ROOM_CREATED:
-    console.log("ACTION_TYPES.ROOM_CREATED");
-
       return {
         ...state,
         roomId: action.roomId
+      }
+    case ACTION_TYPES.LOAD_ROOM:
+      return {
+        ...state,
+        room: action.room
       }
     default:
       return state

@@ -36,6 +36,13 @@ export const createRoom = (roomName, gameFormat, adminUserId) => {
   }
 }
 
+export const loadRoom = (room) => {
+  return {
+    type: ACTION_TYPES.LOAD_ROOM,
+    room: room
+  }
+}
+
 export const validateSession = () => {
   const user = getuserNameFromCookie();
   if (user) {

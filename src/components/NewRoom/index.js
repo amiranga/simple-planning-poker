@@ -68,8 +68,8 @@ export class NewRoom extends Component {
                       type="radio"
                       label={GAME_FORMATS.sequential.label}
                       name="gameFormat"
-                      value={GAME_FORMATS.fibonacci.id}
-                      id={GAME_FORMATS.fibonacci.id}
+                      value={GAME_FORMATS.sequential.id}
+                      id={GAME_FORMATS.sequential.id}
                     />
                   </Col>
                 </Form.Group>

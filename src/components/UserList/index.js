@@ -10,7 +10,6 @@ class UserList extends Component {
   componentDidMount() {
     getUsers((newUser) => {
       if (newUser) {
-        console.log("users", newUser);
         this.setState({ users: this.state.users.concat(newUser) })
       }
     })
@@ -23,7 +22,7 @@ class UserList extends Component {
 
   render() {
     return (
-      <Container class="user-holder">
+      <Container className="user-holder">
         {this.state.users.map(usr => <User name={usr.fullname} />)}
       </Container>
     );

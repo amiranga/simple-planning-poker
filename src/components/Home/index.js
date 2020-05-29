@@ -9,7 +9,6 @@ import NewRoom from '../NewRoom';
 class Home extends React.Component {
 
   constructor(props) {
-    console.log("home c");
     super(props);
   }
 
