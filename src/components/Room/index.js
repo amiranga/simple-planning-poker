@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { withRouter } from 'react-router-dom';
 import { Container, Col, Row } from 'react-bootstrap';
 
 import CardDeck from '../CardDeck';
@@ -13,12 +13,18 @@ class Room extends Component {
 
   constructor(props) {
     super(props);
+    this.getRoomIdFromUrl = this.getRoomIdFromUrl.bind(this);
   }
 
   componentDidMount() {
-    getRoom(this.props.roomId, (room) => {
-      this.props.loadRoom(room);
-    })
+    const roomId = this.props.roomId || this.getRoomIdFromUrl();
+      getRoom(roomId, (room) => {
+        this.props.loadRoom(room);
+      })
+  }
+
+  getRoomIdFromUrl() {
+    return (this.props.location.pathname || window.location.pathname).split("/")[2];
   }
 
   render() {
@@ -54,4 +60,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Room));

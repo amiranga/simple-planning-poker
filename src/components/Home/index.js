@@ -3,32 +3,23 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { validateSession } from '../../store/actions';
-import NameInput from '../NameInput';
-import NewRoom from '../NewRoom';
 
 class Home extends React.Component {
 
   constructor(props) {
     super(props);
+    this.createRoom = this.createRoom.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const roomId = this.props.roomId;
-    if (roomId) {
-      this.props.history.push(`/room/${roomId}`)
-    }
-  }
-
-  componentDidMount() {
-    this.props.validateSession();
+  createRoom() {
+    this.props.history.push('/newroom');
   }
 
   render() {
     return (
       <div>
-        {this.props.isLoggedIn ?
-          <NewRoom />
-          : <NameInput />}
+        <div>Welcome to Simple Planning Poker</div>
+        <button onClick={this.createRoom}></button>
       </div>
     );
   }
@@ -36,16 +27,8 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.loggedIn,
-    userName: state.userName,
-    roomId: state.roomId
+    userName: state.userName
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    validateSession: () => dispatch(validateSession()),
-  }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+export default connect(mapStateToProps, null)(Home);

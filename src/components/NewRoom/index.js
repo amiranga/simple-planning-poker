@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom';
 import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
 
 import { GAME_FORMATS } from '../../constants';
-import { createRoom } from '../../store/actions'
+import { createRoom } from '../../store/actions';
 
 export class NewRoom extends Component {
 
@@ -11,6 +12,13 @@ export class NewRoom extends Component {
     super(props);
     this.startGame = this.startGame.bind(this);
     this.state = {}
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const roomId = this.props.roomId;
+    if (roomId) {
+      this.props.history.push(`/room/${roomId}`)
+    }
   }
 
   startGame(e) {
@@ -90,7 +98,8 @@ export class NewRoom extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userId: state.userId
+    userId: state.userId,
+    roomId: state.roomId
   }
 }
 
@@ -102,4 +111,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewRoom)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewRoom));
