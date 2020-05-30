@@ -9,21 +9,26 @@ class UserList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { users: [] }
+    this.state = { users: {} }
   }
 
   componentDidMount() {
     getUsers(this.props.roomId, (newUser) => {
       if (newUser) {
-        this.setState({ users: this.state.users.concat(newUser) })
+        const oldSet = this.state.users;
+        oldSet[newUser.userId] = newUser
+        this.setState({ users: oldSet })
       }
     })
   }
 
   render() {
+    const userMap = this.state.users;
+    console.log("um", JSON.stringify(userMap))
+    console.log("umk", JSON.stringify(Object.keys(userMap)))
     return (
       <Container className="user-holder">
-        {this.state.users.map(usr => <User key={usr.userId} name={usr.userName} />)}
+        {Object.keys(userMap).map(uid => <User key={uid} name={userMap[uid].userName} vote={userMap[uid].vote} />)}
       </Container>
     );
   }

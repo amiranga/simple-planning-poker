@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import './styles.css';
 
@@ -15,11 +16,11 @@ class PokerCard extends React.Component {
 
   toggleSelect() {
     const isSelected = !this.props.selected;
-
+    const roomId = (this.props.location.pathname || window.location.pathname).split("/")[2];
     if (isSelected) {
-      this.props.addVote(this.props.number)
+      this.props.addVote(roomId, this.props.userId, this.props.number)
     } else {
-      this.props.removeVote();
+      this.props.removeVote(roomId, this.props.userId);
     }
   }
 
@@ -42,14 +43,21 @@ class PokerCard extends React.Component {
   }
 }
 
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userId: state.userId
+  }
+}
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addVote: (val) => {
-      dispatch(addVote(val))
+    addVote: (roomId, userId, val) => {
+      dispatch(addVote(roomId, userId, val))
     },
-    removeVote: () => {
-      dispatch(removeVote())
+    removeVote: (roomId, userId) => {
+      dispatch(removeVote(roomId, userId))
     }
   }
 }
-export default connect(null, mapDispatchToProps)(PokerCard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PokerCard));

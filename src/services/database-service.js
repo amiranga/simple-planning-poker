@@ -1,6 +1,5 @@
 import firebase from '../firebase';
 
-const USER_TABLE = 'user';
 const ROOM_TABLE = 'room';
 
 export function saveUser(roomId, user) {
@@ -52,4 +51,15 @@ export function getRoom(roomId, cb) {
     .then(doc => {
       cb(doc.data());
     });
+}
+
+
+export function saveVote(roomId, userId, vote) {
+  const db = firebase.firestore();
+  db.collection(roomId)
+    .doc(userId)
+    .set(
+      { vote: vote },
+      { merge: true }
+    );
 }

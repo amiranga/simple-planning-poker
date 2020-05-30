@@ -7,10 +7,11 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {}
+    this._displayVoted = this._displayVoted.bind(this);
   }
 
-  displayVoted(voted) {
-    return voted? '\u2714' : 'X';
+  _displayVoted() {
+    return this.props.vote? '\u2714' : '-';
   }
 
   render() {
@@ -20,7 +21,7 @@ class User extends Component {
           <div className="user-name">{this.props.name}</div>
         </Col>
         <Col sm={4}>
-          <div className="action">{this.displayVoted(true)}</div>
+          <div className="action">{this._displayVoted()}</div>
         </Col>
       </Row>
     );
