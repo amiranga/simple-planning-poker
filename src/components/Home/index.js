@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
-import { validateSession } from '../../store/actions';
+import { Card, Button } from 'react-bootstrap';
 
 class Home extends React.Component {
 
@@ -12,14 +11,21 @@ class Home extends React.Component {
   }
 
   createRoom() {
-    this.props.history.push('/newroom');
+    this.props.history.push('/createroom');
   }
 
   render() {
     return (
       <div>
-        <div>Welcome to Simple Planning Poker</div>
-        <button onClick={this.createRoom}></button>
+        <Card>
+          <Card.Body>
+            <Card.Title>{this.props.userName && (<span>Hi {this.props.userName} !!! </span>)} Welcome to Simple Planning Poker</Card.Title>
+            <Card.Text>
+              Planning poker app for Estimating Agile Projects. No sign in required. Have Fun !
+            </Card.Text>
+            <Button variant="primary" onClick={this.createRoom}>Create New Room</Button>
+          </Card.Body>
+        </Card>
       </div>
     );
   }

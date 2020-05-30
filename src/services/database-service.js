@@ -3,12 +3,14 @@ import firebase from '../firebase';
 const USER_TABLE = 'user';
 const ROOM_TABLE = 'room';
 
-export function saveUser(user) {
+export function saveUser(roomId, user) {
   const db = firebase.firestore();
-  db.collection(USER_TABLE).add({
-    userId: user.userId,
-    userName: user.userName
-  });
+  db.collection(roomId)
+    .doc(user.userId)
+    .set({
+      userId: user.userId,
+      userName: user.userName
+    });
 }
 
 export function getUsers(cb) {
@@ -32,23 +34,23 @@ export function getUsers(cb) {
 
 export function saveRoom(room) {
   const db = firebase.firestore();
-  db.collection(ROOM_TABLE).add({
-    roomId: room.roomId,
-    roomName: room.roomName,
-    gameFormat: room.gameFormat,
-    adminUserId: room.adminUserId
-  });
+  db.collection(ROOM_TABLE)
+    .doc(room.roomId)
+    .set({
+      roomId: room.roomId,
+      roomName: room.roomName,
+      gameFormat: room.gameFormat,
+      adminUserId: room.adminUserId
+    });
 }
 
 export function getRoom(roomId, cb) {
   const db = firebase.firestore();
   db.collection(ROOM_TABLE)
-    .where("roomId", "==", roomId)
+    .doc(roomId)
     .get()
-    .then(snap => {
-      snap.forEach(doc => {
-        console.log("geting data", doc.data());
-        cb(doc.data());
-      });
+    .then(doc => {
+      console.log("geting data", doc.data());
+      cb(doc.data());
     });
 }

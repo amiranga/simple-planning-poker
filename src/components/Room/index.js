@@ -5,9 +5,10 @@ import { Container, Col, Row } from 'react-bootstrap';
 
 import CardDeck from '../CardDeck';
 import UserList from '../UserList';
+import NameInput from '../NameInput';
 
 import { getRoom } from '../../services/database-service';
-import { loadRoom } from '../../store/actions';
+import { loadRoom, validateSession } from '../../store/actions';
 
 class Room extends Component {
 
@@ -17,10 +18,14 @@ class Room extends Component {
   }
 
   componentDidMount() {
+    this.props.validateSession();
+  }
+
+  componentDidMount() {
     const roomId = this.props.roomId || this.getRoomIdFromUrl();
-      getRoom(roomId, (room) => {
-        this.props.loadRoom(room);
-      })
+    getRoom(roomId, (room) => {
+      this.props.loadRoom(room);
+    })
   }
 
   getRoomIdFromUrl() {
@@ -29,18 +34,26 @@ class Room extends Component {
 
   render() {
     return (
-      <Container>
-        {this.props.room && (
-          <Row>
-            <Col sm={8}>
-              <CardDeck gameFormat={this.props.room.gameFormat} />
-            </Col>
-            <Col sm={4}>
-              <UserList />
-            </Col>
-          </Row>
-        )}
-      </Container>
+      <div>
+        {this.props.isLoggedIn ? (
+          <Container>
+            {this.props.room && (
+              <Row>
+                <Col sm={8}>
+                  <CardDeck gameFormat={this.props.room.gameFormat} />
+                </Col>
+                <Col sm={4}>
+                  <UserList />
+                </Col>
+              </Row>
+            )}
+          </Container>
+        ) : (
+            <NameInput />
+          )}
+
+      </div>
+
     );
   }
 }
@@ -49,7 +62,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadRoom: (room) => {
       dispatch(loadRoom(room))
-    }
+    },
+    validateSession: () => dispatch(validateSession()),
   }
 }
 
@@ -57,6 +71,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     roomId: state.roomId,
     room: state.room,
+    isLoggedIn: state.loggedIn
   }
 }
 

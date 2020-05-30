@@ -1,6 +1,6 @@
 import * as ACTION_TYPES from './action-types';
 import { getuserNameFromCookie, updateCookie } from '../../services/cookie-service.js'
-import { saveUser, saveRoom } from '../../services/database-service';
+import { saveRoom } from '../../services/database-service';
 import { generateUserId, generateRoomId } from '../../services/uid-service';
 import User from '../../dto/user';
 import Room from '../../dto/room';
@@ -18,7 +18,6 @@ export const createSession = (userName) => {
   const userId = generateUserId();
   const user = new User(userName, userId);
   updateCookie(user);
-  saveUser(user);
   return {
     type: ACTION_TYPES.LOGGED_IN,
     userName: userName,
