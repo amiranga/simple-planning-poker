@@ -7,27 +7,26 @@ import { Container } from 'react-bootstrap';
 
 class UserList extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { users: [] }
+  }
+
   componentDidMount() {
-    getUsers((newUser) => {
+    getUsers(this.props.roomId, (newUser) => {
       if (newUser) {
         this.setState({ users: this.state.users.concat(newUser) })
       }
     })
   }
 
-  constructor(props) {
-    super(props);
-    this.state = { users: [] }
-  }
-
   render() {
     return (
       <Container className="user-holder">
-        {this.state.users.map(usr => <User name={usr.fullname} />)}
+        {this.state.users.map(usr => <User key={usr.userId} name={usr.userName} />)}
       </Container>
     );
   }
 }
 
-
-export default connect()(UserList);
+export default connect(null, null)(UserList);

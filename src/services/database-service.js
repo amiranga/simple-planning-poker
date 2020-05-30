@@ -13,9 +13,9 @@ export function saveUser(roomId, user) {
     });
 }
 
-export function getUsers(cb) {
+export function getUsers(roomId, cb) {
   var query = firebase.firestore()
-    .collection(USER_TABLE)
+    .collection(roomId)
     .orderBy('userName', 'desc')
     .limit(15);
 
@@ -50,7 +50,6 @@ export function getRoom(roomId, cb) {
     .doc(roomId)
     .get()
     .then(doc => {
-      console.log("geting data", doc.data());
       cb(doc.data());
     });
 }
