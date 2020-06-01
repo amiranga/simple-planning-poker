@@ -59,3 +59,7 @@ export const validateSession = () => {
     }
   }
 }
+
+export const revealVotes = () => {
+
+}

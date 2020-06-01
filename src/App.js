@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Navbar } from 'react-bootstrap';
 
 import Home from './components/Home';
 import Room from './components/Room';
@@ -14,7 +15,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home">
+            Simple Planning Poker
+          </Navbar.Brand>
+        </Navbar>
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
@@ -22,7 +28,7 @@ class App extends Component {
             <Route path="/room" component={Room} />
           </Switch>
         </Router>
-      </div>
+      </>
     );
   }
 }

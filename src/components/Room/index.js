@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 
 import CardDeck from '../CardDeck';
 import UserList from '../UserList';
 import NameInput from '../NameInput';
 
 import User from '../../dto/user';
-import { getRoom, saveUser } from '../../services/database-service';
-import { loadRoom, validateSession } from '../../store/actions';
+import { getRoom, saveUser, getVotes } from '../../services/database-service';
+import { loadRoom, validateSession, revealVotes } from '../../store/actions';
 
 class Room extends Component {
 
@@ -17,6 +17,7 @@ class Room extends Component {
     super(props);
     this._getRoomId = this._getRoomId.bind(this);
     this._registerUserForRoom = this._registerUserForRoom.bind(this);
+    this._revealVotes = this._revealVotes.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +25,7 @@ class Room extends Component {
     const roomId = this._getRoomId();
     getRoom(roomId, (room) => {
       this.props.loadRoom(room);
-      if(this.props.isLoggedIn) {
+      if (this.props.isLoggedIn) {
         this._registerUserForRoom(roomId)
       }
     });
@@ -46,6 +47,12 @@ class Room extends Component {
     saveUser(roomId, user);
   }
 
+  _revealVotes() {
+    getVotes(this._getRoomId(), (votes) => {
+      console.log("votes", votes);
+    });
+  }
+
   render() {
     return (
       <div>
@@ -58,6 +65,12 @@ class Room extends Component {
                 </Col>
                 <Col sm={4}>
                   <UserList roomId={this._getRoomId()} />
+                  {this.props.room.adminUserId == this.props.userId && (
+                    <>
+                      <Button variant="primary">Rest Votes</Button>
+                      <Button variant="primary" onClick={this._revealVotes}>End Votes</Button>
+                    </>
+                  )}
                 </Col>
               </Row>
             )}
@@ -78,6 +91,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(loadRoom(room))
     },
     validateSession: () => dispatch(validateSession()),
+    revealVotes: (room) => dispatch(revealVotes(room)),
   }
 }
 

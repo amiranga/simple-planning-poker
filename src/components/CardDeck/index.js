@@ -45,26 +45,29 @@ class CardDeck extends Component {
     return (
       <Container className="card-holder">
         <Row>
+          <Col><PokerCard number={deck[0]} selected={vote == deck[0]} /></Col>
           <Col><PokerCard number={deck[1]} selected={vote == deck[1]} /></Col>
           <Col><PokerCard number={deck[2]} selected={vote == deck[2]} /></Col>
           <Col><PokerCard number={deck[3]} selected={vote == deck[3]} /></Col>
-          <Col><PokerCard number={deck[4]} selected={vote == deck[4]} /></Col>
+
         </Row>
         <Row>
+          <Col><PokerCard number={deck[4]} selected={vote == deck[4]} /></Col>
           <Col><PokerCard number={deck[5]} selected={vote == deck[5]} /></Col>
           <Col><PokerCard number={deck[6]} selected={vote == deck[6]} /></Col>
           <Col><PokerCard number={deck[7]} selected={vote == deck[7]} /></Col>
-          <Col><PokerCard number={deck[8]} selected={vote == deck[8]} /></Col>
+
         </Row>
         <Row>
+          <Col><PokerCard number={deck[8]} selected={vote == deck[8]} /></Col>
           <Col><PokerCard number={deck[9]} selected={vote == deck[9]} /></Col>
           <Col><PokerCard number={deck[10]} selected={vote == deck[10]} /></Col>
           <Col><PokerCard number={deck[11]} selected={vote == deck[11]} /></Col>
-          <Col><PokerCard number={deck[12]} selected={vote == deck[12]} /></Col>
+
         </Row>
         {deck.lngeth == 13 && (
           <Row>
-            <Col><PokerCard number={deck[13]} selected={vote == deck[13]} /></Col>
+            <Col><PokerCard number={deck[12]} selected={vote == deck[12]} /></Col>
           </Row>
         )}
       </Container>

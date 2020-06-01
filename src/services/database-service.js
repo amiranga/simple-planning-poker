@@ -9,7 +9,8 @@ export function saveUser(roomId, user) {
     .set({
       userId: user.userId,
       userName: user.userName
-    });
+    },
+      { merge: true });
 }
 
 export function getUsers(roomId, cb) {
@@ -62,4 +63,18 @@ export function saveVote(roomId, userId, vote) {
       { vote: vote },
       { merge: true }
     );
+}
+
+export function getVotes(roomId, cb) {
+  const db = firebase.firestore();
+  db.collection(roomId)
+    .get()
+    .then(snap => {
+      const votes = {};
+      snap.forEach(doc => {
+        const data = doc.data();
+        votes[data.userId] = data.vote;
+      });
+      cb(votes);
+    });
 }

@@ -18,7 +18,7 @@ class Home extends React.Component {
     return (
       <div>
         <Card>
-          <Card.Body>
+          <Card.Body className="text-center">
             <Card.Title>{this.props.userName && (<span>Hi {this.props.userName} !!! </span>)} Welcome to Simple Planning Poker</Card.Title>
             <Card.Text>
               Planning poker app for Estimating Agile Projects. No sign in required. Have Fun !
