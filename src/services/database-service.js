@@ -1,4 +1,5 @@
 import firebase from '../firebase';
+import { queryByTestId } from '@testing-library/react';
 
 const ROOM_TABLE = 'room';
 
@@ -77,4 +78,29 @@ export function getVotes(roomId, cb) {
       });
       cb(votes);
     });
+}
+
+export function saveRoomStatus(roomId, status, cb) {
+  const roomStatusTbl = `${roomId}_status`;
+  const db = firebase.firestore();
+  db.collection(roomStatusTbl)
+    .doc(roomId)
+    .set({ status : status, updatedTime : new Date().getTime() });
+}
+
+export function watchRoomStatus(roomId, cb) {
+  const roomStatusTbl = `${roomId}_status`;
+  var query = firebase.firestore()
+    .collection(roomStatusTbl)
+    .doc(roomId)
+
+  query.onSnapshot(function (doc) {
+    console.log("Current data: ", doc.data());
+    var message = doc.data();
+    cb(message);
+  });
+}
+
+function _getRoomStatusTableName(roomId) {
+  return `${roomId}_status`;
 }

@@ -60,6 +60,9 @@ export const validateSession = () => {
   }
 }
 
-export const revealVotes = () => {
-
+export const revealVotes = (votes) => {
+  return {
+    type: ACTION_TYPES.REVEAL_VOTES,
+    votes: votes
+  }
 }

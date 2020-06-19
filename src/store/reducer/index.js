@@ -18,6 +18,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         vote: null
       }
+    case ACTION_TYPES.REVEAL_VOTES:
+      return {
+        ...state,
+        finalVotes: action.votes
+      }
     case ACTION_TYPES.LOGGED_IN:
       return {
         ...state,

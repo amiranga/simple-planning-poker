@@ -6,9 +6,10 @@ import { Container, Col, Row, Button } from 'react-bootstrap';
 import CardDeck from '../CardDeck';
 import UserList from '../UserList';
 import NameInput from '../NameInput';
+import VoteGraph from '../VoteGraph';
 
 import User from '../../dto/user';
-import { getRoom, saveUser, getVotes } from '../../services/database-service';
+import { getRoom, saveUser, saveRoomStatus, watchRoomStatus, getVotes } from '../../services/database-service';
 import { loadRoom, validateSession, revealVotes } from '../../store/actions';
 
 class Room extends Component {
@@ -29,6 +30,13 @@ class Room extends Component {
         this._registerUserForRoom(roomId)
       }
     });
+    watchRoomStatus(this._getRoomId(), roomStatus => {
+      if (roomStatus && roomStatus.status === 'END') {
+        getVotes(this._getRoomId(), (votes) => {
+          this.props.revealVotes(votes);
+        });
+      }
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,9 +56,7 @@ class Room extends Component {
   }
 
   _revealVotes() {
-    getVotes(this._getRoomId(), (votes) => {
-      console.log("votes", votes);
-    });
+    saveRoomStatus(this._getRoomId(), 'END');
   }
 
   render() {
@@ -61,7 +67,11 @@ class Room extends Component {
             {this.props.room && (
               <Row>
                 <Col sm={8}>
-                  <CardDeck gameFormat={this.props.room.gameFormat} />
+                  {this.props.finalVotes ?
+                    <VoteGraph /> :
+                    <CardDeck gameFormat={this.props.room.gameFormat} />
+                  }
+
                 </Col>
                 <Col sm={4}>
                   <UserList roomId={this._getRoomId()} />
@@ -91,7 +101,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(loadRoom(room))
     },
     validateSession: () => dispatch(validateSession()),
-    revealVotes: (room) => dispatch(revealVotes(room)),
+    revealVotes: (votes) => dispatch(revealVotes(votes))
   }
 }
 
@@ -102,6 +112,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.loggedIn,
     userName: state.userName,
     userId: state.userId,
+    finalVotes: state.finalVotes,
   }
 }
 
