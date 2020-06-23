@@ -49,7 +49,7 @@ const rootReducer = (state = initialState, action) => {
       }
     case ACTION_TYPES.ADD_USER:
       const newUser = action.newUser;
-      const existingUsers = {...state.users};
+      const existingUsers = { ...state.users };
       existingUsers[newUser.userId] = newUser
       return {
         ...state,

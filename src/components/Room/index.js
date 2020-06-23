@@ -9,7 +9,7 @@ import NameInput from '../NameInput';
 import VoteGraph from '../VoteGraph';
 
 import User from '../../dto/user';
-import { getRoom, saveUser, saveRoomStatus, watchRoomStatus, getVotes } from '../../services/database-service';
+import { getRoom, saveUser, saveRoomStatus, resetRoom, watchRoomStatus, getVotes } from '../../services/database-service';
 import { loadRoom, validateSession, revealVotes } from '../../store/actions';
 
 class Room extends Component {
@@ -32,7 +32,7 @@ class Room extends Component {
       }
     });
     watchRoomStatus(this._getRoomId(), roomStatus => {
-      if (roomStatus && roomStatus.status === 'END') {
+      if (roomStatus && roomStatus.status === 'FINISHED') {
         getVotes(this._getRoomId(), (votes) => {
           this.props.revealVotes(votes);
         });
@@ -57,11 +57,11 @@ class Room extends Component {
   }
 
   _revealVotes() {
-    saveRoomStatus(this._getRoomId(), 'END');
+    saveRoomStatus(this._getRoomId(), 'FINISHED');
   }
 
   _resetVotes() {
-    saveRoomStatus(this._getRoomId(), 'END');
+    resetRoom(this._getRoomId(), this.props.users);
   }
 
   render() {
@@ -117,6 +117,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.loggedIn,
     userName: state.userName,
     userId: state.userId,
+    users: state.users,
     finalVotes: state.finalVotes,
   }
 }

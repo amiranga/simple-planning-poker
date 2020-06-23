@@ -85,7 +85,27 @@ export function saveRoomStatus(roomId, status, cb) {
   const db = firebase.firestore();
   db.collection(roomStatusTbl)
     .doc(roomId)
-    .set({ status : status, updatedTime : new Date().getTime() });
+    .set({ status: status, updatedTime: new Date().getTime() });
+}
+
+export function resetRoom(roomId, users) {
+  const roomStatusTbl = `${roomId}_status`;
+  const db = firebase.firestore();
+  db.collection(roomStatusTbl)
+    .doc(roomId)
+    .set({ status: 'ACTIVE', updatedTime: new Date().getTime() });
+
+  const userIds = Object.keys(users);
+  if (userIds) {
+    userIds.forEach(uid => {
+      db.collection(roomId)
+        .doc(uid)
+        .set(
+          { vote: null },
+          { merge: true }
+        );
+    })
+  }
 }
 
 export function watchRoomStatus(roomId, cb) {
@@ -95,7 +115,6 @@ export function watchRoomStatus(roomId, cb) {
     .doc(roomId)
 
   query.onSnapshot(function (doc) {
-    console.log("Current data: ", doc.data());
     var message = doc.data();
     cb(message);
   });
