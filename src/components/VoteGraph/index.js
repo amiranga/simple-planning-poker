@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
-
 import { PieChart } from 'react-minimal-pie-chart';
-
-import { createSession } from '../../store/actions';
 
 class VoteGraph extends Component {
   constructor(props) {
@@ -43,6 +39,14 @@ class VoteGraph extends Component {
     return (
       <PieChart
         data={data}
+        label={({ dataEntry }) => `${dataEntry.title} (${Math.round(dataEntry.percentage)} %)`}
+        labelStyle={{
+          fontSize: '5px'
+        }}
+        lineWidth={75}
+        labelPosition={50}
+        viewBoxSize={[200, 200]}
+        animate
       />
     )
   }
