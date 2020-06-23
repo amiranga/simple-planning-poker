@@ -66,3 +66,10 @@ export const revealVotes = (votes) => {
     votes: votes
   }
 }
+
+export const populateUsers = (newUser) => {
+  return {
+    type: ACTION_TYPES.ADD_USER,
+    newUser: newUser
+  }
+}

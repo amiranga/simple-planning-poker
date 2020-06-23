@@ -19,6 +19,7 @@ class Room extends Component {
     this._getRoomId = this._getRoomId.bind(this);
     this._registerUserForRoom = this._registerUserForRoom.bind(this);
     this._revealVotes = this._revealVotes.bind(this);
+    this._resetVotes = this._resetVotes.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +60,10 @@ class Room extends Component {
     saveRoomStatus(this._getRoomId(), 'END');
   }
 
+  _resetVotes() {
+    saveRoomStatus(this._getRoomId(), 'END');
+  }
+
   render() {
     return (
       <div>
@@ -77,7 +82,7 @@ class Room extends Component {
                   <UserList roomId={this._getRoomId()} />
                   {this.props.room.adminUserId == this.props.userId && (
                     <>
-                      <Button variant="primary">Rest Votes</Button>
+                      <Button variant="primary" onClick={this._resetVotes}>Rest Votes</Button>
                       <Button variant="primary" onClick={this._revealVotes}>End Votes</Button>
                     </>
                   )}

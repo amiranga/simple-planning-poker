@@ -3,27 +3,22 @@ import { connect } from 'react-redux'
 import User from '../User'
 
 import { getUsers } from '../../services/database-service';
+import { populateUsers } from '../../store/actions';
+
 import { Container } from 'react-bootstrap';
 
 class UserList extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { users: {} }
-  }
-
   componentDidMount() {
     getUsers(this.props.roomId, (newUser) => {
       if (newUser) {
-        const oldSet = this.state.users;
-        oldSet[newUser.userId] = newUser
-        this.setState({ users: oldSet })
+        this.props.populateUsers(newUser);
       }
     })
   }
 
   render() {
-    const userMap = this.state.users;
+    const userMap = this.props.users;
     return (
       <Container className="user-holder">
         {Object.keys(userMap).map(uid => <User key={uid} name={userMap[uid].userName} vote={userMap[uid].vote} />)}
@@ -32,4 +27,17 @@ class UserList extends Component {
   }
 }
 
-export default connect(null, null)(UserList);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    populateUsers: (newUser) => {
+      dispatch(populateUsers(newUser))
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);

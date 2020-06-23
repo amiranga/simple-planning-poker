@@ -3,7 +3,8 @@ import * as ACTION_TYPES from '../actions/action-types';
 const initialState = {
   vote: null,
   userName: null,
-  loggedIn: false
+  loggedIn: false,
+  users: {}
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -45,6 +46,14 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         room: action.room
+      }
+    case ACTION_TYPES.ADD_USER:
+      const newUser = action.newUser;
+      const existingUsers = {...state.users};
+      existingUsers[newUser.userId] = newUser
+      return {
+        ...state,
+        users: existingUsers
       }
     default:
       return state
