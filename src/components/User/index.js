@@ -11,7 +11,12 @@ class User extends Component {
   }
 
   _displayVoted() {
-    return this.props.vote? '\u2714' : '-';
+    const vote = this.props.vote;
+    if (this.props.revealVotes) {
+      return vote || '-';
+    } else {
+      return vote ? '\u2714' : '-';
+    }
   }
 
   render() {

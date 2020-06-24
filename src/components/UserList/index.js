@@ -21,7 +21,7 @@ class UserList extends Component {
     const userMap = this.props.users;
     return (
       <Container className="user-holder">
-        {Object.keys(userMap).map(uid => <User key={uid} name={userMap[uid].userName} vote={userMap[uid].vote} />)}
+        {Object.keys(userMap).map(uid => <User key={uid} name={userMap[uid].userName} vote={userMap[uid].vote} revealVotes={Boolean(this.props.finalVotes)}/>)}
       </Container>
     );
   }
@@ -29,7 +29,8 @@ class UserList extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    users: state.users
+    users: state.users,
+    finalVotes: state.finalVotes
   }
 }
 
