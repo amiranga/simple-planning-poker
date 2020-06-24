@@ -19,9 +19,9 @@ class NameInput extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    if(!this.state.username || !this.state.username.trim()) {
+    if (!this.state.username || !this.state.username.trim()) {
       event.stopPropagation();
-      this.setState({validated : true});
+      this.setState({ validated: true });
       return false;
     }
     this.props.createSession(this.state.username);
