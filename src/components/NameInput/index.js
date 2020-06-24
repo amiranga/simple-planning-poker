@@ -8,7 +8,7 @@ import { createSession } from '../../store/actions';
 class NameInput extends Component {
   constructor(props) {
     super(props)
-    this.state = { username: '' }
+    this.state = { username: '', validated: false }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -19,6 +19,11 @@ class NameInput extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if(!this.state.username || !this.state.username.trim()) {
+      event.stopPropagation();
+      this.setState({validated : true});
+      return false;
+    }
     this.props.createSession(this.state.username);
   }
 
@@ -29,10 +34,13 @@ class NameInput extends Component {
           <Modal.Title>Please Enter Your Name</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form noValidate validated={this.state.validated}>
             <Form.Group as={Row} controlId="formHorizontalName">
               <Col sm={8}>
-                <Form.Control type="text" placeholder="Name" onChange={this.handleChange} />
+                <Form.Control type="text" placeholder="Name" onChange={this.handleChange} required />
+                <Form.Control.Feedback type="invalid">
+                  Please enter valid user name!
+                </Form.Control.Feedback>
               </Col>
               <Col sm={4}>
                 <Button onClick={this.handleSubmit}>Save</Button>

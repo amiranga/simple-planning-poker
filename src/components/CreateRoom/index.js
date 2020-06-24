@@ -7,12 +7,14 @@ import NameInput from '../NameInput';
 import { GAME_FORMATS } from '../../constants';
 import { createRoom, validateSession } from '../../store/actions';
 
+import './styles.css';
+
 export class CreateRoom extends Component {
 
   constructor(props) {
     super(props);
     this.startGame = this.startGame.bind(this);
-    this.state = {}
+    this.state = { validated: false }
   }
 
   componentDidMount() {
@@ -28,6 +30,13 @@ export class CreateRoom extends Component {
 
   startGame(e) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      this.setState({ validated: true })
+      return false;
+    }
+
     const roomName = e.target.elements['roomName'].value;
     let gameFormat;
     e.target.elements['gameFormat'].forEach(ele => {
@@ -48,20 +57,23 @@ export class CreateRoom extends Component {
             </Modal.Header>
             <Modal.Body>
 
-              <Form onSubmit={this.startGame}>
+              <Form noValidate validated={this.state.validated} onSubmit={this.startGame}>
                 <Form.Group as={Row} controlId="formHorizontalName">
                   <Form.Label column sm={4}>
-                    Game Name
-                </Form.Label>
+                    Room Name
+                  </Form.Label>
                   <Col sm={8}>
-                    <Form.Control type="text" name="roomName" placeholder="Name" />
+                    <Form.Control type="text" name="roomName" placeholder="Name" required />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter valid room name!
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <fieldset>
-                  <Form.Group as={Row}>
+                  <Form.Group as={Row} className="game-formats">
                     <Form.Label as="legend" column sm={4}>
                       Game Format
-                  </Form.Label>
+                    </Form.Label>
                     <Col sm={8}>
                       <Form.Check
                         type="radio"
@@ -70,6 +82,7 @@ export class CreateRoom extends Component {
                         name="gameFormat"
                         value={GAME_FORMATS.scrum.id}
                         id={GAME_FORMATS.scrum.id}
+                        isValid={false}
                       />
                       <Form.Check
                         type="radio"
@@ -77,6 +90,7 @@ export class CreateRoom extends Component {
                         name="gameFormat"
                         value={GAME_FORMATS.fibonacci.id}
                         id={GAME_FORMATS.fibonacci.id}
+                        isValid={false}
                       />
                       <Form.Check
                         type="radio"
@@ -84,6 +98,7 @@ export class CreateRoom extends Component {
                         name="gameFormat"
                         value={GAME_FORMATS.sequential.id}
                         id={GAME_FORMATS.sequential.id}
+                        isValid={false}
                       />
                     </Col>
                   </Form.Group>
