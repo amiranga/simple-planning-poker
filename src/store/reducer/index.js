@@ -4,6 +4,7 @@ const initialState = {
   vote: null,
   userName: null,
   loggedIn: false,
+  voteEnded: false,
   users: {}
 }
 
@@ -22,7 +23,7 @@ const rootReducer = (state = initialState, action) => {
     case ACTION_TYPES.REVEAL_VOTES:
       return {
         ...state,
-        finalVotes: action.votes
+        voteEnded: action.voteEnded
       }
     case ACTION_TYPES.LOGGED_IN:
       return {

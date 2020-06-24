@@ -9,11 +9,10 @@ import NameInput from '../NameInput';
 import VoteGraph from '../VoteGraph';
 
 import User from '../../dto/user';
-import { getRoom, saveUser, saveRoomStatus, resetRoom, watchRoomStatus, getVotes } from '../../services/database-service';
+import { getRoom, saveUser, saveRoomStatus, resetRoom, watchRoomStatus } from '../../services/database-service';
 import { loadRoom, validateSession, revealVotes } from '../../store/actions';
 
 import './styles.css';
-import { DropdownDivider } from 'react-bootstrap/Dropdown';
 
 class Room extends Component {
 
@@ -36,9 +35,9 @@ class Room extends Component {
     });
     watchRoomStatus(this._getRoomId(), roomStatus => {
       if (roomStatus && roomStatus.status === 'FINISHED') {
-        getVotes(this._getRoomId(), (votes) => {
-          this.props.revealVotes(votes);
-        });
+        this.props.revealVotes(true);
+      } else if (roomStatus && roomStatus.status === 'ACTIVE') {
+        this.props.revealVotes(false);
       }
     })
   }
@@ -68,6 +67,7 @@ class Room extends Component {
   }
 
   render() {
+    console.log('revealVotes :>> ', this.props.revealVotes);
     return (
       <div>
         {this.props.isLoggedIn ? (
@@ -75,7 +75,7 @@ class Room extends Component {
             {this.props.room && (
               <Row>
                 <Col sm={8}>
-                  {this.props.finalVotes ?
+                  {this.props.voteEnded ?
                     <VoteGraph /> :
                     <CardDeck gameFormat={this.props.room.gameFormat} />
                   }
@@ -86,7 +86,7 @@ class Room extends Component {
                   {this.props.room.adminUserId == this.props.userId && (
                     <div className="admin-actions">
                       <Button variant="primary" onClick={this._resetVotes}>Rest Votes</Button>
-                      {!this.props.finalVotes &&
+                      {!this.props.voteEnded &&
                         <Button variant="primary" onClick={this._revealVotes}>End Votes</Button>
                       }
                     </div>
@@ -123,7 +123,7 @@ const mapStateToProps = (state, ownProps) => {
     userName: state.userName,
     userId: state.userId,
     users: state.users,
-    finalVotes: state.finalVotes,
+    voteEnded: state.voteEnded,
   }
 }
 

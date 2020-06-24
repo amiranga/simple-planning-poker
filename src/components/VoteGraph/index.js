@@ -15,14 +15,15 @@ class VoteGraph extends Component {
   }
 
   render() {
+    const userMap = this.props.users;
     const votes = {};
     const data = [];
-    const finalVotes = this.props.finalVotes; // {ezffo1591016315849: undefined, nhsxr1591044491394: "13", sdiuv1591044471155: "21", sklht1591016241481: "13"}
 
     const validVotes = [];
-    for (let key of Object.keys(finalVotes)) {
-      if (finalVotes[key] !== undefined) {
-        validVotes.push(finalVotes[key]);
+    for (let key of Object.keys(userMap)) {
+      const vote = userMap[key].vote;
+      if (vote !== undefined) {
+        validVotes.push(vote);
       }
     }
 
@@ -54,7 +55,7 @@ class VoteGraph extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    finalVotes: state.finalVotes,
+    users: state.users,
   }
 }
 export default connect(mapStateToProps, null)(VoteGraph)

@@ -66,20 +66,6 @@ export function saveVote(roomId, userId, vote) {
     );
 }
 
-export function getVotes(roomId, cb) {
-  const db = firebase.firestore();
-  db.collection(roomId)
-    .get()
-    .then(snap => {
-      const votes = {};
-      snap.forEach(doc => {
-        const data = doc.data();
-        votes[data.userId] = data.vote;
-      });
-      cb(votes);
-    });
-}
-
 export function saveRoomStatus(roomId, status, cb) {
   const roomStatusTbl = `${roomId}_status`;
   const db = firebase.firestore();

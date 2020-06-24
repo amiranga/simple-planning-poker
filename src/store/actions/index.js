@@ -60,10 +60,10 @@ export const validateSession = () => {
   }
 }
 
-export const revealVotes = (votes) => {
+export const revealVotes = (isReveal) => {
   return {
     type: ACTION_TYPES.REVEAL_VOTES,
-    votes: votes
+    voteEnded: isReveal
   }
 }
 
