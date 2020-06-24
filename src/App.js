@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
 
 import Home from './components/Home';
 import Room from './components/Room';
 import CreateRoom from './components/CreateRoom';
-
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 class App extends Component {
   constructor(props) {
@@ -15,20 +15,15 @@ class App extends Component {
 
   render() {
     return (
-      <>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="#home">
-            Simple Planning Poker
-          </Navbar.Brand>
-        </Navbar>
-        <Router>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/createroom" component={CreateRoom} />
-            <Route path="/room" component={Room} />
-          </Switch>
-        </Router>
-      </>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/createroom" component={CreateRoom} />
+          <Route path="/room" component={Room} />
+        </Switch>
+        <Footer />
+      </Router>
     );
   }
 }

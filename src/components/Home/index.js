@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { Card, Button } from 'react-bootstrap';
 
+import './styles.css';
+
 class Home extends React.Component {
 
   constructor(props) {
@@ -16,17 +18,15 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
-        <Card>
-          <Card.Body className="text-center">
-            <Card.Title>{this.props.userName && (<span>Hi {this.props.userName} !!! </span>)} Welcome to Simple Planning Poker</Card.Title>
-            <Card.Text>
-              Planning poker app for Estimating Agile Projects. No sign in required. Have Fun !
-            </Card.Text>
-            <Button variant="primary" onClick={this.createRoom}>Create New Room</Button>
-          </Card.Body>
-        </Card>
-      </div>
+      <Card className="text-center into-card">
+        <Card.Body>
+          <Card.Title>{this.props.userName && (<span>Hi {this.props.userName} !!! </span>)} Welcome to Simple Planning Poker</Card.Title>
+          <Card.Text>
+            Simplest Planning poker application for Estimating Agile Projects.<p>Free and No sign in required. Enjoy !</p>
+          </Card.Text>
+          <Button variant="primary" onClick={this.createRoom}>Create New Room</Button>
+        </Card.Body>
+      </Card>
     );
   }
 }
