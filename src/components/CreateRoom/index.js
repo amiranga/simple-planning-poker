@@ -14,6 +14,7 @@ export class CreateRoom extends Component {
   constructor(props) {
     super(props);
     this.startGame = this.startGame.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.state = { validated: false }
   }
 
@@ -47,6 +48,12 @@ export class CreateRoom extends Component {
     this.props.createRoom(roomName, gameFormat, this.props.userId);
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter' && e.shiftKey === false) {
+      e.preventDefault();
+    }
+  }
+
   render() {
     return (
       <div>
@@ -57,7 +64,7 @@ export class CreateRoom extends Component {
             </Modal.Header>
             <Modal.Body>
 
-              <Form noValidate validated={this.state.validated} onSubmit={this.startGame}>
+              <Form noValidate validated={this.state.validated} onSubmit={this.startGame} onKeyDown={this.handleKeyDown}>
                 <Form.Group as={Row} controlId="formHorizontalName">
                   <Form.Label column sm={4}>
                     Room Name
@@ -78,7 +85,7 @@ export class CreateRoom extends Component {
                       <Form.Check
                         type="radio"
                         defaultChecked
-                        label={GAME_FORMATS.scrum.label}
+                        label={`${GAME_FORMATS.scrum.label} (${GAME_FORMATS.scrum.cards.join(', ')})`}
                         name="gameFormat"
                         value={GAME_FORMATS.scrum.id}
                         id={GAME_FORMATS.scrum.id}
@@ -86,7 +93,7 @@ export class CreateRoom extends Component {
                       />
                       <Form.Check
                         type="radio"
-                        label={GAME_FORMATS.fibonacci.label}
+                        label={`${GAME_FORMATS.fibonacci.label} (${GAME_FORMATS.fibonacci.cards.join(', ')})`}
                         name="gameFormat"
                         value={GAME_FORMATS.fibonacci.id}
                         id={GAME_FORMATS.fibonacci.id}
@@ -94,7 +101,7 @@ export class CreateRoom extends Component {
                       />
                       <Form.Check
                         type="radio"
-                        label={GAME_FORMATS.sequential.label}
+                        label={`${GAME_FORMATS.sequential.label} (${GAME_FORMATS.sequential.cards.join(', ')})`}
                         name="gameFormat"
                         value={GAME_FORMATS.sequential.id}
                         id={GAME_FORMATS.sequential.id}

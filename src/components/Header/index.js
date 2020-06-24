@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Navbar } from 'react-bootstrap';
 
+import './styles.css';
 
 class Header extends Component {
 
@@ -13,7 +14,7 @@ class Header extends Component {
 
   render() {
     return (
-      <Navbar bg="primary" variant="dark">
+      <Navbar bg="primary" variant="dark" className="app-header">
         <Navbar.Brand href="javascript:void(0)" onClick={this._goToHome.bind(this)}>
           Simple Planning Poker
         </Navbar.Brand>

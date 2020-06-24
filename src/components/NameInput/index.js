@@ -27,6 +27,12 @@ class NameInput extends Component {
     this.props.createSession(this.state.username);
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter' && e.shiftKey === false) {
+      e.preventDefault();
+    }
+  }
+
   render() {
     return (
       <Modal show={true} size="md" centered>
@@ -34,7 +40,7 @@ class NameInput extends Component {
           <Modal.Title>Please Enter Your Name</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={this.state.validated}>
+          <Form noValidate validated={this.state.validated} onKeyDown={this.handleKeyDown}>
             <Form.Group as={Row} controlId="formHorizontalName">
               <Col sm={8}>
                 <Form.Control type="text" placeholder="Name" onChange={this.handleChange} required />

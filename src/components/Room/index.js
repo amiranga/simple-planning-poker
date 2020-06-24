@@ -12,6 +12,9 @@ import User from '../../dto/user';
 import { getRoom, saveUser, saveRoomStatus, resetRoom, watchRoomStatus, getVotes } from '../../services/database-service';
 import { loadRoom, validateSession, revealVotes } from '../../store/actions';
 
+import './styles.css';
+import { DropdownDivider } from 'react-bootstrap/Dropdown';
+
 class Room extends Component {
 
   constructor(props) {
@@ -81,10 +84,12 @@ class Room extends Component {
                 <Col sm={4}>
                   <UserList roomId={this._getRoomId()} />
                   {this.props.room.adminUserId == this.props.userId && (
-                    <>
+                    <div className="admin-actions">
                       <Button variant="primary" onClick={this._resetVotes}>Rest Votes</Button>
-                      <Button variant="primary" onClick={this._revealVotes}>End Votes</Button>
-                    </>
+                      {!this.props.finalVotes &&
+                        <Button variant="primary" onClick={this._revealVotes}>End Votes</Button>
+                      }
+                    </div>
                   )}
                 </Col>
               </Row>
