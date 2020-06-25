@@ -41,7 +41,7 @@ class CardDeck extends Component {
   render() {
     const deck = GAME_FORMATS[this.props.gameFormat].cards;
     const vote = this.props.vote;
-
+    // TODO use radio buttons as cards https://react-bootstrap.netlify.app/components/buttons/#checkbox--radio
     return (
       <Container className="card-holder">
         <Row>
