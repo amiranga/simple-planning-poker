@@ -7,6 +7,8 @@ import { populateUsers } from '../../store/actions';
 
 import { Container } from 'react-bootstrap';
 
+import './styles.css';
+
 class UserList extends Component {
 
   componentDidMount() {

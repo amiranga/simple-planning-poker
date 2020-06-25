@@ -81,8 +81,7 @@ class Room extends Component {
                   }
 
                 </Col>
-                <Col sm={4}>
-                  <UserList roomId={this._getRoomId()} />
+                <Col sm={4}>                  
                   {this.props.room.adminUserId == this.props.userId && (
                     <div className="admin-actions">
                       <Button variant="primary" onClick={this._resetVotes}>Rest Votes</Button>
@@ -91,6 +90,7 @@ class Room extends Component {
                       }
                     </div>
                   )}
+                  <UserList roomId={this._getRoomId()} />
                 </Col>
               </Row>
             )}

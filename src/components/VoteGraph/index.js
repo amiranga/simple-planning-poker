@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { PieChart } from 'react-minimal-pie-chart';
 
+import './styles.css';
+
 class VoteGraph extends Component {
   constructor(props) {
     super(props)
@@ -10,8 +12,28 @@ class VoteGraph extends Component {
       { username: '' }
   }
 
-  randonColor() {
-    return "#" + ((1 << 24) * Math.random() | 0).toString(16);
+  generateColor(precentage) {
+    if (precentage > 90) {
+      return '#ff0000';
+    } else if (precentage > 80) {
+      return '#ff3300';
+    } else if (precentage > 70) {
+      return '#ff6600';
+    } else if (precentage > 60) {
+      return '#ff9900';
+    } else if (precentage > 50) {
+      return '#ffcc00';
+    } else if (precentage > 40) {
+      return '#ffff00';
+    } else if (precentage > 30) {
+      return '#ccff00';
+    } else if (precentage > 20) {
+      return '#99ff00';
+    } else if (precentage > 10) {
+      return '#66ff00';
+    } else if (precentage > 0) {
+      return '#33ff00';
+    }
   }
 
   render() {
@@ -34,21 +56,26 @@ class VoteGraph extends Component {
     });
 
     Object.keys(votes).forEach(vote => {
-      data.push({ title: vote, value: votes[vote] / nValidVotes, color: this.randonColor() })
+      const percentage = (votes[vote] / nValidVotes) * 100;
+      data.push({ title: vote, value: percentage, color: this.generateColor(percentage) })
     });
 
     return (
-      <PieChart
-        data={data}
-        label={({ dataEntry }) => `${dataEntry.title} (${Math.round(dataEntry.percentage)} %)`}
-        labelStyle={{
-          fontSize: '5px'
-        }}
-        lineWidth={75}
-        labelPosition={50}
-        viewBoxSize={[200, 200]}
-        animate
-      />
+      <div className="chart-holder">
+        <PieChart
+          data={data}
+          label={({ dataEntry }) => `${dataEntry.title} (${Math.round(dataEntry.percentage)} %)`}
+          labelStyle={{
+            fontSize: '5px'
+          }}
+          lineWidth={90}
+          labelPosition={60}
+          viewBoxSize={[130, 130]}
+          center={[65, 55]}
+          segmentsShift={1}
+          animate
+        />
+      </div>
     )
   }
 }

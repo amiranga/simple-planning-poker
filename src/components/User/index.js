@@ -15,7 +15,7 @@ class User extends Component {
     if (this.props.voteEnded) {
       return vote || '-';
     } else {
-      return vote ? '\u2714' : '-';
+      return vote ? '\u2714' : '\u274C';
     }
   }
 
@@ -26,7 +26,7 @@ class User extends Component {
           <div className="user-name">{this.props.name}</div>
         </Col>
         <Col sm={4}>
-          <div className="action">{this._displayVoted()}</div>
+          <div className="action text-right">{this._displayVoted()}</div>
         </Col>
       </Row>
     );

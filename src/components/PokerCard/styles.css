@@ -13,14 +13,13 @@
   display:block;
 }
 .poker-card:hover {
-  background-color: rgb(29, 172, 255);
-  box-shadow: 0px 0px 0px 7px rgb(0, 76, 121) inset;
+  box-shadow: 0px 0px 0px 7px rgb(34, 123, 255) inset;
   cursor: pointer;
 }
 
 .poker-card.selected {
-  background-color: rgb(0, 76, 121);
-  box-shadow: 0px 0px 0px 7px rgb(0, 76, 121) inset;
+  background-color: rgb(34, 123, 255);
+  box-shadow: 0px 0px 0px 7px rgb(34, 123, 255) inset;
   color: #f3f3f3;
   cursor: pointer;
 }

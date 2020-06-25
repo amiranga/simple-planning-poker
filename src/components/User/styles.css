@@ -2,6 +2,9 @@
   padding-top: 5px;
   padding-bottom: 5px;
   border: 3px solid #cecece;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
