@@ -2,3 +2,6 @@
   border: 3px solid #cecece;
   border-radius: 5px;
 }
+.chart-holder.has-error {
+  border: none
+}

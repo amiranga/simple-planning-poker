@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
 
 import { Navbar } from 'react-bootstrap';
 
@@ -8,14 +7,10 @@ import './styles.css';
 
 class Header extends Component {
 
-  _goToHome() {
-    this.props.history.push(`/`);
-  }
-
   render() {
     return (
       <Navbar bg="primary" variant="dark" className="app-header">
-        <Navbar.Brand href="javascript:void(0)" onClick={this._goToHome.bind(this)}>
+        <Navbar.Brand href="/" >
           Simple Planning Poker
         </Navbar.Brand>
         {this.props.userName &&
@@ -36,4 +31,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(Header));
+export default connect(mapStateToProps, null)(Header);

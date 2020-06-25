@@ -67,7 +67,6 @@ class Room extends Component {
   }
 
   render() {
-    console.log('revealVotes :>> ', this.props.revealVotes);
     return (
       <div>
         {this.props.isLoggedIn ? (

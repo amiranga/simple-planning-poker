@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { PieChart } from 'react-minimal-pie-chart';
+import { Alert } from 'react-bootstrap';
 
 import './styles.css';
 
@@ -44,25 +45,30 @@ class VoteGraph extends Component {
     const validVotes = [];
     for (let key of Object.keys(userMap)) {
       const vote = userMap[key].vote;
-      if (vote !== undefined) {
+      if (vote != undefined && vote != null) {
         validVotes.push(vote);
       }
     }
-
     const nValidVotes = validVotes.length;
-    validVotes.forEach(element => {
-      const voteLabel = element.toString();
-      votes[voteLabel] = votes[voteLabel] ? votes[voteLabel] + 1 : 1;
-    });
+    const isValid = nValidVotes > 0;
 
-    Object.keys(votes).forEach(vote => {
-      const percentage = (votes[vote] / nValidVotes) * 100;
-      data.push({ title: vote, value: percentage, color: this.generateColor(percentage) })
-    });
+    console.log('validVotes :>> ', validVotes);
+
+    if (isValid) {
+      validVotes.forEach(element => {
+        const voteLabel = element.toString();
+        votes[voteLabel] = votes[voteLabel] ? votes[voteLabel] + 1 : 1;
+      });
+
+      Object.keys(votes).forEach(vote => {
+        const percentage = (votes[vote] / nValidVotes) * 100;
+        data.push({ title: vote, value: percentage, color: this.generateColor(percentage) })
+      });
+    }
 
     return (
-      <div className="chart-holder">
-        <PieChart
+      <div className={`chart-holder ${isValid ? '' : 'has-error'}`}>
+        {isValid ? <PieChart
           data={data}
           label={({ dataEntry }) => `${dataEntry.title} (${Math.round(dataEntry.percentage)} %)`}
           labelStyle={{
@@ -74,7 +80,8 @@ class VoteGraph extends Component {
           center={[65, 55]}
           segmentsShift={1}
           animate
-        />
+        /> : <Alert variant="danger">No one voted. Reset the votes and try again!</Alert>}
+
       </div>
     )
   }
