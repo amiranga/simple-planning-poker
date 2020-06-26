@@ -14,7 +14,6 @@ class CardDeck extends Component {
     this.state = {}
   }
   static getDerivedStateFromProps(props, state) {
-    console.log('props :>> ', props);
     if (props.users && props.users[props.userId]) {
       const prevVote = props.users[props.userId].vote;
       return {
@@ -27,7 +26,6 @@ class CardDeck extends Component {
   render() {
     const deck = GAME_FORMATS[this.props.gameFormat].cards;
     const vote = this.state.vote;
-    console.log('p vote :>> ', vote);
     // TODO use radio buttons as cards https://react-bootstrap.netlify.app/components/buttons/#checkbox--radio
     return (
       <Container className="card-holder">

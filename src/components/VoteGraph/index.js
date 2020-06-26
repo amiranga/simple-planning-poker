@@ -52,7 +52,6 @@ class VoteGraph extends Component {
     const nValidVotes = validVotes.length;
     const isValid = nValidVotes > 0;
 
-    console.log('validVotes :>> ', validVotes);
 
     if (isValid) {
       validVotes.forEach(element => {

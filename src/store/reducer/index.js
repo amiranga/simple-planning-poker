@@ -52,7 +52,6 @@ const rootReducer = (state = initialState, action) => {
       const newUser = action.newUser;
       const existingUsers = { ...state.users };
       existingUsers[newUser.userId] = newUser
-      console.log('existingUsers :>> ', existingUsers);
       return {
         ...state,
         users: existingUsers
