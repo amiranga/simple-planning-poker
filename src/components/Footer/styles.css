@@ -1,0 +1,24 @@
+.navbar .copyright {
+  font-size: 12px;
+  padding-top: 12px;
+  padding-bottom: 0;
+  color: white;
+}
+
+.navbar .copyright a {
+  text-decoration: none;
+  color: white;
+}
+
+.spp-logo img {
+  width: 100%;
+}
+
+.about-bullets > li {
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.social-links a {
+  margin-right: 5px;
+}
