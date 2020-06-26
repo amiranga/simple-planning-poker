@@ -13,34 +13,21 @@ class CardDeck extends Component {
     super(props);
     this.state = {}
   }
-
-  drawCardRow(deck) {
-    return (
-      <Container>
-        <Row>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-        </Row>
-      </Container>
-    )
+  static getDerivedStateFromProps(props, state) {
+    console.log('props :>> ', props);
+    if (props.users && props.users[props.userId]) {
+      const prevVote = props.users[props.userId].vote;
+      return {
+        vote: prevVote
+      }
+    }
+    return {}
   }
+
   render() {
     const deck = GAME_FORMATS[this.props.gameFormat].cards;
-    const vote = this.props.vote;
+    const vote = this.state.vote;
+    console.log('p vote :>> ', vote);
     // TODO use radio buttons as cards https://react-bootstrap.netlify.app/components/buttons/#checkbox--radio
     return (
       <Container className="card-holder">
@@ -74,7 +61,8 @@ class CardDeck extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    vote: state.vote
+    users: state.users,
+    userId: state.userId
   }
 }
 
