@@ -9,8 +9,8 @@ import NameInput from '../NameInput';
 import VoteGraph from '../VoteGraph';
 
 import User from '../../dto/user';
-import { getRoom, saveUser, saveRoomStatus, resetRoom, watchRoomStatus } from '../../services/database-service';
-import { loadRoom, validateSession, revealVotes } from '../../store/actions';
+import { saveUser, saveRoomStatus, resetRoom } from '../../services/database-service';
+import { loadRoom, validateSession, watchRoom } from '../../store/actions';
 
 import './styles.css';
 
@@ -27,19 +27,11 @@ class Room extends Component {
   componentDidMount() {
     this.props.validateSession();
     const roomId = this._getRoomId();
-    getRoom(roomId, (room) => {
-      this.props.loadRoom(room);
-      if (this.props.isLoggedIn) {
-        this._registerUserForRoom(roomId)
-      }
-    });
-    watchRoomStatus(this._getRoomId(), roomStatus => {
-      if (roomStatus && roomStatus.status === 'FINISHED') {
-        this.props.revealVotes(true);
-      } else if (roomStatus && roomStatus.status === 'ACTIVE') {
-        this.props.revealVotes(false);
-      }
-    })
+    this.props.loadRoom(roomId);
+    if (this.props.isLoggedIn) {
+      this._registerUserForRoom(roomId)
+    }
+    this.props.watchRoom(roomId);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -109,8 +101,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     loadRoom: (room) => {
       dispatch(loadRoom(room))
     },
-    validateSession: () => dispatch(validateSession()),
-    revealVotes: (votes) => dispatch(revealVotes(votes))
+    watchRoom: (room) => {
+      dispatch(watchRoom(room))
+    },
+    validateSession: () => dispatch(validateSession())
   }
 }
 

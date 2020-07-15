@@ -1,6 +1,6 @@
 import * as ACTION_TYPES from './action-types';
 import { getuserNameFromCookie, updateCookie } from '../../services/cookie-service.js'
-import { saveRoom, saveVote } from '../../services/database-service';
+import { saveRoom, saveVote, getRoom, watchRoomStatus } from '../../services/database-service';
 import { generateUserId, generateRoomId } from '../../services/uid-service';
 import User from '../../dto/user';
 import Room from '../../dto/room';
@@ -38,11 +38,33 @@ export const createRoom = (roomName, gameFormat, adminUserId) => {
   }
 }
 
-export const loadRoom = (room) => {
-  return {
-    type: ACTION_TYPES.LOAD_ROOM,
-    room: room
-  }
+export const loadRoom = (roomId) => {
+  return (dispatch) => {
+      getRoom(roomId, (room) => {
+        dispatch({
+          type: ACTION_TYPES.LOAD_ROOM,
+          room: room
+        });
+      })
+  };
+}
+
+export const watchRoom = (roomId) => {
+  return (dispatch) => {
+    watchRoomStatus(roomId, (roomStatus) => {
+      if (roomStatus && roomStatus.status === 'FINISHED') {
+        dispatch({
+          type: ACTION_TYPES.REVEAL_VOTES,
+          voteEnded: true
+        });
+      } else if (roomStatus && roomStatus.status === 'ACTIVE') {
+        dispatch({
+          type: ACTION_TYPES.REVEAL_VOTES,
+          voteEnded: false
+        });
+      }
+    })
+  };
 }
 
 export const validateSession = () => {
@@ -57,13 +79,6 @@ export const validateSession = () => {
     return {
       type: ACTION_TYPES.LOGGED_OUT
     }
-  }
-}
-
-export const revealVotes = (isReveal) => {
-  return {
-    type: ACTION_TYPES.REVEAL_VOTES,
-    voteEnded: isReveal
   }
 }
 
