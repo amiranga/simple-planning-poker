@@ -1,3 +1,7 @@
 .game-formats .form-check-label {
   color: #212529 !important;
 }
+.invite-message {
+  font-size: 11px;
+  float: right;
+}

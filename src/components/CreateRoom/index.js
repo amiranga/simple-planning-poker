@@ -116,6 +116,9 @@ export class CreateRoom extends Component {
                   </Col>
                 </Form.Group>
               </Form>
+              <span className="invite-message">
+                Create New Room and Invite a teammates by sharing URL
+              </span>
 
             </Modal.Body>
           </Modal>)
