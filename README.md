@@ -1,3 +1,7 @@
+# Planning Poker Application
+
+Simple planning poker application that can be use to estimate tasks in scrum planning
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

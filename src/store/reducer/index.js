@@ -5,60 +5,60 @@ const initialState = {
   userName: null,
   loggedIn: false,
   voteEnded: false,
-  users: {}
-}
+  users: {},
+};
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTION_TYPES.VOTE:
       return {
         ...state,
-        vote: action.val
-      }
+        vote: action.val,
+      };
     case ACTION_TYPES.UNVOTE:
       return {
         ...state,
-        vote: null
-      }
+        vote: null,
+      };
     case ACTION_TYPES.REVEAL_VOTES:
       return {
         ...state,
-        voteEnded: action.voteEnded
-      }
+        voteEnded: action.voteEnded,
+      };
     case ACTION_TYPES.LOGGED_IN:
       return {
         ...state,
         userName: action.userName,
         userId: action.userId,
-        loggedIn: true
-      }
+        loggedIn: true,
+      };
     case ACTION_TYPES.LOGGED_OUT:
       return {
         ...state,
         userName: null,
-        loggedIn: false
-      }
+        loggedIn: false,
+      };
     case ACTION_TYPES.ROOM_CREATED:
       return {
         ...state,
-        roomId: action.roomId
-      }
+        roomId: action.roomId,
+      };
     case ACTION_TYPES.LOAD_ROOM:
       return {
         ...state,
-        room: action.room
-      }
+        room: action.room,
+      };
     case ACTION_TYPES.ADD_USER:
       const newUser = action.newUser;
       const existingUsers = { ...state.users };
-      existingUsers[newUser.userId] = newUser
+      existingUsers[newUser.userId] = newUser;
       return {
         ...state,
-        users: existingUsers
-      }
+        users: existingUsers,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default rootReducer
+export default rootReducer;

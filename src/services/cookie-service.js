@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 
-export function getuserNameFromCookie() {
-  return (new Cookies()).get('spp_user');
+export function getUserNameFromCookie() {
+  return new Cookies().get('spp_user');
 }
 
 export function updateCookie(user) {

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
-
 import './styles.css';
 
 class User extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
     this._displayVoted = this._displayVoted.bind(this);
   }
 

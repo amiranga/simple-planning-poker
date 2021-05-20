@@ -2,20 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Container, Col, Row, Button } from 'react-bootstrap';
-
 import CardDeck from '../CardDeck';
 import UserList from '../UserList';
 import NameInput from '../NameInput';
 import VoteGraph from '../VoteGraph';
-
 import User from '../../dto/user';
 import { saveUser, saveRoomStatus, resetRoom } from '../../services/database-service';
 import { loadRoom, validateSession, watchRoom } from '../../store/actions';
-
 import './styles.css';
 
 class Room extends Component {
-
   constructor(props) {
     super(props);
     this._getRoomId = this._getRoomId.bind(this);
@@ -29,7 +25,7 @@ class Room extends Component {
     const roomId = this._getRoomId();
     this.props.loadRoom(roomId);
     if (this.props.isLoggedIn) {
-      this._registerUserForRoom(roomId)
+      this._registerUserForRoom(roomId);
     }
     this.props.watchRoom(roomId);
   }
@@ -42,7 +38,7 @@ class Room extends Component {
   }
 
   _getRoomId() {
-    return this.props.roomId || (this.props.location.pathname || window.location.pathname).split("/")[2];
+    return this.props.roomId || (this.props.location.pathname || window.location.pathname).split('/')[2];
   }
 
   _registerUserForRoom(roomId) {
@@ -65,20 +61,18 @@ class Room extends Component {
           <Container>
             {this.props.room && (
               <Row>
-                <Col sm={8}>
-                  {this.props.voteEnded ?
-                    <VoteGraph /> :
-                    <CardDeck gameFormat={this.props.room.gameFormat} />
-                  }
-
-                </Col>
-                <Col sm={4}>                  
+                <Col sm={8}>{this.props.voteEnded ? <VoteGraph /> : <CardDeck gameFormat={this.props.room.gameFormat} />}</Col>
+                <Col sm={4}>
                   {this.props.room.adminUserId == this.props.userId && (
                     <div className="admin-actions">
-                      <Button variant="primary" onClick={this._resetVotes}>Rest Votes</Button>
-                      {!this.props.voteEnded &&
-                        <Button variant="primary" onClick={this._revealVotes}>End Votes</Button>
-                      }
+                      <Button variant="primary" onClick={this._resetVotes}>
+                        Rest Votes
+                      </Button>
+                      {!this.props.voteEnded && (
+                        <Button variant="primary" onClick={this._revealVotes}>
+                          End Votes
+                        </Button>
+                      )}
                     </div>
                   )}
                   <UserList roomId={this._getRoomId()} />
@@ -87,26 +81,24 @@ class Room extends Component {
             )}
           </Container>
         ) : (
-            <NameInput />
-          )}
-
+          <NameInput />
+        )}
       </div>
-
     );
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    loadRoom: (room) => {
-      dispatch(loadRoom(room))
+    loadRoom: room => {
+      dispatch(loadRoom(room));
     },
-    watchRoom: (room) => {
-      dispatch(watchRoom(room))
+    watchRoom: room => {
+      dispatch(watchRoom(room));
     },
-    validateSession: () => dispatch(validateSession())
-  }
-}
+    validateSession: () => dispatch(validateSession()),
+  };
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -117,7 +109,7 @@ const mapStateToProps = (state, ownProps) => {
     userId: state.userId,
     users: state.users,
     voteEnded: state.voteEnded,
-  }
-}
+  };
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Room));

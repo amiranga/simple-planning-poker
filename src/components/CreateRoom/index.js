@@ -1,21 +1,18 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
-
 import NameInput from '../NameInput';
 import { GAME_FORMATS } from '../../constants';
 import { createRoom, validateSession } from '../../store/actions';
-
 import './styles.css';
 
 export class CreateRoom extends Component {
-
   constructor(props) {
     super(props);
     this.startGame = this.startGame.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.state = { validated: false }
+    this.state = { validated: false };
   }
 
   componentDidMount() {
@@ -25,7 +22,7 @@ export class CreateRoom extends Component {
   componentDidUpdate(prevProps, prevState) {
     const roomId = this.props.roomId;
     if (roomId) {
-      this.props.history.push(`/room/${roomId}`)
+      this.props.history.push(`/room/${roomId}`);
     }
   }
 
@@ -34,7 +31,7 @@ export class CreateRoom extends Component {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
-      this.setState({ validated: true })
+      this.setState({ validated: true });
       return false;
     }
 
@@ -44,7 +41,7 @@ export class CreateRoom extends Component {
       if (ele.checked) {
         gameFormat = ele.value;
       }
-    })
+    });
     this.props.createRoom(roomName, gameFormat, this.props.userId);
   }
 
@@ -63,7 +60,6 @@ export class CreateRoom extends Component {
               <Modal.Title>Create New Game</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-
               <Form noValidate validated={this.state.validated} onSubmit={this.startGame} onKeyDown={this.handleKeyDown}>
                 <Form.Group as={Row} controlId="formHorizontalName">
                   <Form.Label column sm={4}>
@@ -71,9 +67,7 @@ export class CreateRoom extends Component {
                   </Form.Label>
                   <Col sm={8}>
                     <Form.Control type="text" name="roomName" placeholder="Name" required />
-                    <Form.Control.Feedback type="invalid">
-                      Please enter valid room name!
-                    </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">Please enter valid room name!</Form.Control.Feedback>
                   </Col>
                 </Form.Group>
                 <fieldset>
@@ -116,15 +110,14 @@ export class CreateRoom extends Component {
                   </Col>
                 </Form.Group>
               </Form>
-              <span className="invite-message">
-                Create New Room and Invite a teammates by sharing URL
-              </span>
-
+              <span className="invite-message">Create New Room and Invite a teammates by sharing URL</span>
             </Modal.Body>
-          </Modal>)
-          : <NameInput />}
+          </Modal>
+        ) : (
+          <NameInput />
+        )}
       </div>
-    )
+    );
   }
 }
 
@@ -132,17 +125,17 @@ const mapStateToProps = (state, ownProps) => {
   return {
     userId: state.userId,
     isLoggedIn: state.loggedIn,
-    roomId: state.roomId
-  }
-}
+    roomId: state.roomId,
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     createRoom: (roomName, gameFormat, adminUserId) => {
-      dispatch(createRoom(roomName, gameFormat, adminUserId))
+      dispatch(createRoom(roomName, gameFormat, adminUserId));
     },
     validateSession: () => dispatch(validateSession()),
-  }
-}
+  };
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateRoom));
